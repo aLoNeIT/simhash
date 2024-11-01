@@ -1,0 +1,15 @@
+{
+    "name": "alonetech/simhash",
+    "description": "文本重复处理simhash算法",
+    "type": "library",
+    "require": {
+        "fukuball/jieba-php": "^0.34.0"
+    },
+    "license": "MulanPSL-2.0",
+    "authors": [
+        {
+            "name": "aLoNe.Adams.K",
+            "email": "alone@alonetech.com"
+        }
+    ]
+}
