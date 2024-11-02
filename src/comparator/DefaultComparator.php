@@ -49,7 +49,6 @@ class DefaultComparator implements ComparatorInterface
             $diff = $data1[$i] ^ $data2[$i];
             $diffNum += \substr_count(\decbin($diff), '1');
         }
-        var_dump($diffNum);
         return $this->computeSimilarity($diffNum, $size);
     }
 
