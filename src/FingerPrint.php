@@ -53,7 +53,7 @@ class FingerPrint
             $hexBlock = \substr($hash, $i * $block, $block);
             // 将每两位转成二进制字符串
             $binary = '';
-            for ($j = 0; $j < \strlen($hexBlock); $j + 2) {
+            for ($j = 0; $j < \strlen($hexBlock); $j += 2) {
                 $hex = \substr($hexBlock, $j, 2);
                 $binary .= \str_pad(\decbin(\hexdec($hex)), 8, '0', STR_PAD_LEFT);
             }

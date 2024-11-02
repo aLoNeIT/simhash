@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace alonetech\simhash\demo;
 
 use alonetech\simhash\comparator\DefaultComparator;
+use alonetech\simhash\tokenizer\String64Tokenizer;
 use alonetech\simhash\{SimHash, FingerPrint};
 
 error_reporting(E_ALL);
@@ -26,20 +27,28 @@ SimHash算法是一种高效的文本去重算法，其核心思想是将高维�
 但SimHash算法本身并不是直接依赖于高斯分布的计算。SimHash算法主要依赖于文本的分词、哈希函数的选择、权重的分配、合并和降维等步骤。其中，哈希函数的选择对SimHash算法的效果有重要影响，建议选择具有较高散列性的哈希函数以提高算法的准确性。权重的分配也应根据实际情况进行调整，以更好地反映分词在文本中的重要性。
 因此，SimHash算法用到高斯分布的计算这一说法是不准确的。SimHash算法与高斯分布在各自的领域内有着广泛的应用和独特的优势，但二者之间并没有直接的联系。如果在实际应用中需要将SimHash算法与高斯分布相结合，可能是出于特定的应用场景或需求考虑，但这并不是SimHash算法本身的必要步骤或要求。
 EOT;
-    const DEMO_CONTENT3 = '大圣，快收了你的神通吧！';
+    const DEMO_CONTENT3 = '贾君鹏，你妈妈喊你回家吃饭！';
+
+    const DEMO_CONTENT4 = '贾君鹏，你妈妈叫你回家吃饭！';
     public function run()
     {
         try {
             $simHash = new SimHash();
             $fp1 = $simHash->hash(static::DEMO_CONTENT1);
             $fp2 = $simHash->hash(static::DEMO_CONTENT2);
-            $fp3 = $simHash->hash(static::DEMO_CONTENT3);
-            var_dump((string)$fp1, (string)$fp2, (string)$fp3);
+            var_dump((string)$fp1, (string)$fp2);
             $comparator = new DefaultComparator();
             $similarity = $comparator->compare($fp1, $fp2);
             var_dump($similarity);
-            $similarity = $comparator->compare($fp2, $fp3);
+            $simHash2 = new SimHash(tokenizer: new String64Tokenizer());
+            $fp3 = $simHash2->hash(static::DEMO_CONTENT3);
+            $fp4 = $simHash2->hash(static::DEMO_CONTENT4);
+            var_dump((string)$fp3, (string)$fp4);
+            $similarity = $comparator->compare($fp3, $fp4);
             var_dump($similarity);
+            var_dump((string)(new FingerPrint())->load((string)$fp3));
+            var_dump((string)(new FingerPrint())->load((string)$fp1));
+            var_dump((string)(new FingerPrint())->loadData($fp2->getData()));
         } catch (\Throwable $ex) {
             var_dump($ex);
         }
