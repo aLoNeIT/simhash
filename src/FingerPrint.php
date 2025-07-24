@@ -169,7 +169,7 @@ class FingerPrint
     {
         $binary = '';
         foreach ($this->data as $item) {
-            $binary .= \decbin($item);
+            $binary .= \str_pad(\decbin($item), 8, '0', STR_PAD_LEFT);
         }
         return $binary;
     }
